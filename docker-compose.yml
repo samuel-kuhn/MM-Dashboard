@@ -1,0 +1,18 @@
+services:
+ app:
+    container_name: MM-Dashboard
+    image: stubble1749/minecraft-manager
+    ports:
+      - 8000:8000
+    environment:
+      - DISPLAY_SERVER_IP=some-ip
+      - DJANGO_SUPERUSER_USERNAME=admin
+      - DJANGO_SUPERUSER_PASSWORD=password
+      - DEBUG=True
+      - API_SERVER_IP=host.docker.internal
+      - API_SERVER_PORT=5000
+      - SERVER=access-ip
+    volumes:
+      - ./db:/app/db
+    extra_hosts:
+      - "host.docker.internal:host-gateway"  

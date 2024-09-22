@@ -1,0 +1,6 @@
+.error {
+    background-color: lightcoral;
+}
+.error::placeholder {
+    color: white;
+}

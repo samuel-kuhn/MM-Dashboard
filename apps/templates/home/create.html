@@ -1,0 +1,73 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Create {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  <div class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card ">
+          <div class="card-header">
+            <h2 class="card-title">Create a new server</h2>
+          </div>
+          <div class="card-body">
+            <form method="post" action="create">
+              {% csrf_token %} 
+              <div class="form-group">
+                <label for="name">Name: (has to be in [a-zA-Z0-9_.-])</label>
+                <input type="text" class="form-control" name="server_name" id="name" placeholder="Enter name" required onblur="validateName()">
+              </div>
+
+              <div class="form-group">
+                <label for="dropdown">Port:</label>
+                <select class="form-control" name="port" id="port">
+                  {%for port in port_list%}
+                  <option>{{port}}</option>
+                  {%endfor%}
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="email">Version: (write a valid minecraft version)</label>
+                <input class="form-control" name="VERSION" id="VERSION" placeholder="1.18.2" required>
+              </div>
+
+              <div class="form-group">
+                <label for="dropdown">Default gamemode:</label>
+                <select class="form-control" name="MODE" id="MODE">
+                  <option>survival</option>
+                  <option>creative</option>
+                  <option>adventure</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="message">Memory:</label>
+                <select class="form-control" name="MEMORY" id="MEMORY">
+                  {%for i in ram_list%}
+                  <option value="{{i}}G">{{i}} GB</option>
+                  {%endfor%}
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="name">MOTD: (optional message)</label>
+                <input type="text" class="form-control" name="MOTD" id="MOTD" value="just a simple minecraft server">
+              </div>
+              
+              <button type="submit" class="btn btn-success">Create</button>
+             </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
