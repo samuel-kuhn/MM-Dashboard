@@ -5,11 +5,11 @@ services:
     ports:
       - 8000:8000
     environment:
-      - DISPLAY_SERVER_IP=some-ip
-      - DJANGO_SUPERUSER_USERNAME=admin
-      - DJANGO_SUPERUSER_PASSWORD=password
-      - DEBUG=True
-      - API_SERVER_IP=host.docker.internal
+      - DISPLAY_SERVER_IP=some-ip # ip used in the dashboard to show users how to connect to their server
+      - DJANGO_SUPERUSER_USERNAME=admin 
+      - DJANGO_SUPERUSER_PASSWORD=password # use to log in to the admin panel
+      - DEBUG=False # set to True for debugging
+      - API_SERVER_IP=host.docker.internal # ip for connecting to api (leave it for normal set up)
       - API_SERVER_PORT=5000
       - SERVER=access-ip
     volumes:
