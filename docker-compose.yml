@@ -11,7 +11,7 @@ services:
       - DEBUG=False # set to True for debugging
       - API_SERVER_IP=host.docker.internal # ip for connecting to api (leave it for normal set up)
       - API_SERVER_PORT=5000
-      - SERVER=access-ip
+      - SERVER=access-ip # optional: set this to access ip if not localhost
     volumes:
       - ./db:/app/db
     extra_hosts:
