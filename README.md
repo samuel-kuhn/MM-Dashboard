@@ -6,7 +6,7 @@
 
 # Minecraft Manager - Dashboard
 
-This dashboard built on django uses the [Minecraft Manager - API](https://github.com/samuel-kuhn/minecraft-manager-api) to help you manage minecraft servers easily.
+This dashboard built on django uses the [Minecraft Manager - API](https://github.com/samuel-kuhn/MM-API) to help you manage minecraft servers easily.
 
 ## Installation
 
