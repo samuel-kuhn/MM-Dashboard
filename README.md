@@ -18,7 +18,7 @@ There are two ways how you can start the webserver:
 docker run -d --name MM-Dashboard -p 8000:8000 stubble1749/minecraft-manager
 ```
 
-### 2. Docker Compose
+### 2. Docker Compose (Recommended)
 
 Modify the docker-compose.yml file and run the following command:
 
