@@ -19,6 +19,11 @@ and install Python from [here](https://www.python.org/downloads/).
 ### Docker Compose 
 
 Modify the docker-compose.yml file and run the following command:
+
+```
+docker compose up -d
+```
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first
