@@ -22,7 +22,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile -t ${{ vars.DOCKER_REPO }}:github_workflow_${{ github.run_number }} ${{ vars.DOCKER_REPO }}:latest
+      run: docker build . --file Dockerfile -t ${{ vars.DOCKER_REPO }}:github_workflow_${{ github.run_number }} -t ${{ vars.DOCKER_REPO }}:latest
 
     - name: Push image to Docker Hub
       run: docker push -a ${{ vars.DOCKER_REPO }}
