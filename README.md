@@ -6,19 +6,11 @@
 
 # Minecraft Manager - Dashboard
 
-This dashboard built on django uses the [Minecraft Manager - API](https://github.com/samuel-kuhn/minecraft-manager-api) to help you manage minecraft servers easily.
+This dashboard built on django uses the [Minecraft Manager - API](https://github.com/samuel-kuhn/MM-API) to help you manage minecraft servers easily.
 
 ## Installation
 
-There are two ways how you can start the webserver:
-
-### 1. Docker
-
-```
-docker run -d --name MM-Dashboard -p 8000:8000 stubble1749/minecraft-manager
-```
-
-### 2. Docker Compose (Recommended)
+### Docker Compose 
 
 Modify the docker-compose.yml file and run the following command:
 
