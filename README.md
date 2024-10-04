@@ -10,6 +10,12 @@ This dashboard built on django uses the [Minecraft Manager - API](https://github
 
 ## Installation
 
+### Requirements
+
+Make sure to have the following installed and working:
+- [Python](https://www.python.org/downloads/)
+- [Docker](https://docs.docker.com/engine/install/)
+
 ### Docker Compose 
 
 Modify the docker-compose.yml file and run the following command:
