@@ -13,7 +13,7 @@ This dashboard built on django uses the [Minecraft Manager - API](https://github
 ### Requirements
 
 Make sure to have the following installed and working:
-- [python](https://www.python.org/downloads/)
+- [Python](https://www.python.org/downloads/)
 - [Docker](https://docs.docker.com/engine/install/)
 
 ### Docker Compose 
