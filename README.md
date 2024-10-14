@@ -1,5 +1,4 @@
-[![Docker Image CI](https://github.com/samuel-kuhn/MM-Dashboard/actions/workflows/docker-image.yml/badge.svg)](https://github.com/samuel-kuhn/MM-Dashboard/actions/workflows/docker-image.yml)
-
+[![Docker Build and Publish](https://github.com/samuel-kuhn/MM-Dashboard/actions/workflows/docker-image.yml/badge.svg)](https://github.com/samuel-kuhn/MM-Dashboard/actions/workflows/docker-image.yml)
 
 
 
