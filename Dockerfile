@@ -18,8 +18,7 @@ RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
-COPY ./entrypoint.sh /
 
 EXPOSE 8000
 # gunicorn
-CMD ["/bin/bash", "/entrypoint.sh"]
+CMD ["/bin/bash", "/app/entrypoint.sh"]
