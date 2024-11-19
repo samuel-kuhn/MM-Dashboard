@@ -32,5 +32,6 @@ apps/static/assets/.temp
 apps/home/migrations
 
 # custom
-dev/
+.env
+.first_run
 
