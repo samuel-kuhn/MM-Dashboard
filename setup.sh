@@ -4,6 +4,10 @@ if [ ! -f .env ]; then
   echo "SECRET_KEY=$SECRET" > .env
 fi
 
+if [ ! -d db ]; then
+  mkdir db
+fi
+
 python3 manage.py makemigrations home --no-input
 
 python3 manage.py migrate 
