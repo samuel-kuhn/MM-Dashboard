@@ -55,12 +55,13 @@ def servers(request):
     if not server_status:
         html_template = loader.get_template('home/offline.html')
         return HttpResponse(html_template.render(request=request))
-    servers = api_functions.get_servers(request.user.get_username()) if server_status else [[],[]]
+    servers = api_functions.get_servers(request.user.get_username())
+    running, exited = utilites.split_server_list(servers=servers)
     context = { 'segment': 'servers',
                 'url': settings.DISPLAY_SERVER_IP,
                 'status': server_status,
-                'running': servers[0],
-                'exited' : servers[1]
+                'running': running,
+                'exited' : exited
                 }
 
     html_template = loader.get_template('home/servers.html')

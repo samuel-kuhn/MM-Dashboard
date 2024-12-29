@@ -29,3 +29,12 @@ def calculate_used_memory(data): #calculates memory from server data
         total_memory += memory_value
     return total_memory
 
+def split_server_list(servers: list) -> list[list]:
+    running = []
+    exited = []
+    for server in servers:
+        if server['status'] == 'running':
+            running.append(server)
+        else: 
+            exited.append(server)
+    return running, exited

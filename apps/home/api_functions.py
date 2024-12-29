@@ -11,12 +11,9 @@ def ping():
     except Exception:
         return False
 
-def get_servers(username, separated:bool=True ):
+def get_servers(username):
     result = requests.get(f"{server_url}/containers", params={'username': username}).json()
-    if separated:
-        return result
-    else:
-        return result[0]+result[1]
+    return result['servers']
 
 def start(username, server_name):
     response = requests.post(f"{server_url}/start", json={"username": username, "server_name": server_name})
