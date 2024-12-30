@@ -11,12 +11,9 @@ def ping():
     except Exception:
         return False
 
-def get_servers(username, separated:bool=True ):
+def get_servers(username):
     result = requests.get(f"{server_url}/containers", params={'username': username}).json()
-    if separated:
-        return result
-    else:
-        return result[0]+result[1]
+    return result['servers']
 
 def start(username, server_name):
     response = requests.post(f"{server_url}/start", json={"username": username, "server_name": server_name})
@@ -39,7 +36,7 @@ def create(username, data):
     for key, value in config_data.items():
         config_data[key] = value[0]
     config_data = {"username": username, **config_data}
-    response = requests.post(f"{server_url}/create", json=json.dumps(config_data))
+    response = requests.post(f"{server_url}/create", json=config_data)
     return response.status_code
 
 def edit(username, server_name, data):
@@ -47,7 +44,7 @@ def edit(username, server_name, data):
     for key, value in config_data.items():
         config_data[key] = value[0]
     config_data = {"username": username, "server_name": server_name, **config_data}
-    response = requests.post(f"{server_url}/edit", json=json.dumps(config_data))
+    response = requests.post(f"{server_url}/edit", json=config_data)
     return response.status_code
 
 def get_server_config(username, server_name):
@@ -56,7 +53,7 @@ def get_server_config(username, server_name):
     display_config['MEMORY'] = display_config['MEMORY'][:1]
     return display_config
 
-def exec(username, server_name, command):
-    data = {'username': username, 'server_name': server_name, 'command': command}
-    response = requests.post(f"{server_url}/exec", json=json.dumps(data))
+def op(username, server_name, mc_user):
+    data = {'username': username, 'server_name': server_name, 'mc_user': mc_user}
+    response = requests.post(f"{server_url}/op", json=data)
     return response.status_code, response.text

@@ -55,12 +55,13 @@ def servers(request):
     if not server_status:
         html_template = loader.get_template('home/offline.html')
         return HttpResponse(html_template.render(request=request))
-    servers = api_functions.get_servers(request.user.get_username()) if server_status else [[],[]]
+    servers = api_functions.get_servers(request.user.get_username())
+    running, exited = utilites.split_server_list(servers=servers)
     context = { 'segment': 'servers',
                 'url': settings.DISPLAY_SERVER_IP,
                 'status': server_status,
-                'running': servers[0],
-                'exited' : servers[1]
+                'running': running,
+                'exited' : exited
                 }
 
     html_template = loader.get_template('home/servers.html')
@@ -71,14 +72,14 @@ def start(request):
     server_name = request.POST['server_name']
     username = request.user.get_username()
     response = api_functions.start(username, server_name)
-    return redirect("/") if response !=500 else redirect("/page-500.html") 
+    return redirect("/") if response == 200 else redirect("/page-500.html") 
 
 @login_required(login_url="/login/")
 def stop(request):
     server_name = request.POST['server_name']
     username = request.user.get_username()
     response = api_functions.stop(username, server_name)
-    return redirect("/") if response !=500 else redirect("/page-500.html")  
+    return redirect("/") if response == 200 else redirect("/page-500.html")  
 
 @login_required(login_url="/login/")
 def create(request):
@@ -94,7 +95,7 @@ def create(request):
         data = dict(request.POST)
         data.pop('csrfmiddlewaretoken')
         response = api_functions.create(username=request.user.get_username(), data=data)
-        return redirect("/") if response !=500 else redirect("/page-500.html")
+        return redirect("/") if response == 200 else redirect("/page-500.html")
 
     html_template = loader.get_template('home/create.html')
     return HttpResponse(html_template.render(context, request))
@@ -108,18 +109,18 @@ def edit(request):
         return HttpResponse(html_template.render(request=request))
     server_name = request.GET.get('server')
     if server_name == None: 
-        servers = api_functions.get_servers(request.user.get_username(), separated=False)
-        context = {'segment': 'edit', 'server_name': server_name, 'servers': servers}    
+        servers = api_functions.get_servers(request.user.get_username())
+        context = {'segment': 'edit', 'overview': True, 'servers': servers}    
     else:   
-        server_config = api_functions.get_server_config(request.user.get_username(), server_name)     
-        context = {'segment': 'edit', **server_config, **user_profile} # make the used port and memory selected
+        server = api_functions.get_server_config(request.user.get_username(), server_name)  
+        context = {'segment': 'edit', **server, **user_profile} 
 
     if request.method == "POST":
         data = dict(request.POST)
         data.pop('csrfmiddlewaretoken')
         server_name = request.GET.get('server')
         response = api_functions.edit(username=request.user.get_username(), server_name=server_name, data=data)
-        return redirect("/edit") if response !=500 else redirect("/page-500.html")
+        return redirect("/edit") if response == 200 else redirect("/page-500.html")
 
     html_template = loader.get_template('home/edit.html')
     return HttpResponse(html_template.render(context, request))
@@ -130,7 +131,7 @@ def delete(request):
         data = dict(request.POST)
         server_name=data['server_name'][0]
         response = api_functions.delete(username=request.user.get_username(), server_name=server_name)
-        return redirect("/edit") if response !=500 else redirect("/page-500.html")
+        return redirect("/edit") if response == 200 else redirect("/page-500.html")
 
     return redirect("/")
 
@@ -140,7 +141,7 @@ def reset(request):
         data = dict(request.POST)
         server_name=data['server_name'][0]
         response = api_functions.reset(username=request.user.get_username(), server_name=server_name)
-        return redirect("/edit") if response !=500 else redirect("/page-500.html")
+        return redirect("/") if response == 200 else redirect("/page-500.html")
 
     return redirect("/")
 
@@ -149,10 +150,9 @@ def exec(request):
     if request.method == "POST":
         data = dict(request.POST)
         server_name=data['server_name'][0]
-        mc_username = data['username'][0]
-        command = f'op {mc_username}'
-        response_code, response = api_functions.exec(username=request.user.get_username(), server_name=server_name, command=command)
-        return redirect("/") if response_code !=500 else redirect(f"/page-500.html?error={response}")
+        mc_user = data['username'][0]
+        response_code, response = api_functions.op(username=request.user.get_username(), server_name=server_name, mc_user=mc_user)
+        return redirect("/") if response_code == 200 else redirect(f"/page-500.html?error={response}")
 
     return redirect("/")
 

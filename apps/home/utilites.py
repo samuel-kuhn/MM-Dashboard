@@ -23,9 +23,18 @@ def calculate_used_memory(data): #calculates memory from server data
     if running_servers==[]:
         return total_memory
     for item in running_servers:
-        memory = item['memory'].split('G')[0] # Split the string at 'G' and keep the first part
+        memory = item['MEMORY'].split('G')[0] # Split the string at 'G' and keep the first part
         # Convert the string to an integer
         memory_value = int(memory)
         total_memory += memory_value
     return total_memory
 
+def split_server_list(servers: list) -> list[list]:
+    running = []
+    exited = []
+    for server in servers:
+        if server['STATUS'] == 'running':
+            running.append(server)
+        else: 
+            exited.append(server)
+    return running, exited

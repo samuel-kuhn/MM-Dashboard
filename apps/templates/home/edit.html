@@ -14,7 +14,7 @@
         <div class="card-header">
           <h2 class="card-title">Edit your server</h2>
         </div>
-        {%if server_name is None %}
+        {%if overview %}
         <div class="card-header">
           <h3> Available Servers </h3>
         </div>
@@ -22,41 +22,43 @@
         <div class="card-body d-flex">
           <blockquote>
               <p class="blockquote blockquote-primary" style="width: 300px; text-align: center; font-weight: bold;">
-                <a href="/edit?server={{server.name}}" class="d-block" style="font-weight: bolder; color: #e14eca;">
-                  {{server.name}}
+                <a href="/edit?server={{server.NAME}}" class="d-block" style="font-weight: bolder; color: #e14eca;">
+                  {{server.NAME}}
                 </a>
               </p>
             <div class="d-flex">
               <form action="/reset" method="POST" onsubmit="return confirm('Are you sure you want to reset this server?');">
                 {% csrf_token %} 
-                <input type="hidden" name="server_name" value="{{server.name}}">
+                <input type="hidden" name="server_name" value="{{server.NAME}}">
                 <button type="submit" class="btn btn-warning mr-2">Reset</button>
               </form>
               <form action="/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this server?');">
                 {% csrf_token %} 
-                  <input type="hidden" name="server_name" value="{{server.name}}">
+                  <input type="hidden" name="server_name" value="{{server.NAME}}">
                   <button type="submit" class="btn btn-danger">Delete</button>
               </form>
           </div>
           </blockquote>
         </div>
         {%endfor%}
+
+        <!-- Edit view -->
         {%else%}
         <div class="card-header">
           <blockquote>
             <p class="blockquote blockquote-primary" style="width: 300px; text-align: center; font-weight: bold;">
-              {{server_name}}
+              {{NAME}}
             </p>
           </blockquote>
          </div>
         <div class="card-body">
-          <form method="post" action="edit?server={{server_name}}">
+          <form method="post" action="edit?server={{NAME}}">
             {% csrf_token %} 
             <div class="form-group">
               <label for="dropdown">Port:</label>
-              <select class="form-control" name="port" id="port">
+              <select class="form-control" name="PORT" id="PORT">
                 {%for i in port_list%}
-                {% if i == port %}
+                {% if i == PORT %}
                 <option value="{{i}}" selected>{{i}}</option>
                 {% else %}
                 <option value="{{i}}">{{i}}</option>
@@ -78,7 +80,7 @@
               <label for="message">Memory: </label>
               <select class="form-control" name="MEMORY" id="MEMORY">
                 {%for i in ram_list%}
-                {%if i == MEMORY%}
+                {%if i == MEMORY %}
                 <option value="{{i}}G" selected>{{i}} GB</option>
                 {%else%}
                 <option value="{{i}}G">{{i}} GB</option>
