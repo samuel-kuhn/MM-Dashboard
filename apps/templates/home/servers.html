@@ -64,7 +64,7 @@
                             <form action="/exec" method="post" class="d-flex">
                               {% csrf_token %} 
                               <input type="text" required name="username" placeholder="username" class="form-control w-50">
-                              <input class="form-control d-none" name="server_name" value="{{ server.name }}">
+                              <input class="form-control d-none" name="server_name" value="{{ server.NAME }}">
                               <button type="submit" class="btn btn-primary btn-sm">Go!</button>
                             </form>
                           </div>

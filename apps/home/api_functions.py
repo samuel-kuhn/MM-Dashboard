@@ -53,7 +53,7 @@ def get_server_config(username, server_name):
     display_config['MEMORY'] = display_config['MEMORY'][:1]
     return display_config
 
-def exec(username, server_name, command):
-    data = {'username': username, 'server_name': server_name, 'command': command}
-    response = requests.post(f"{server_url}/exec", json=data)
+def op(username, server_name, mc_user):
+    data = {'username': username, 'server_name': server_name, 'mc_user': mc_user}
+    response = requests.post(f"{server_url}/op", json=data)
     return response.status_code, response.text

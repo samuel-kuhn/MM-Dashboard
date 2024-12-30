@@ -141,7 +141,7 @@ def reset(request):
         data = dict(request.POST)
         server_name=data['server_name'][0]
         response = api_functions.reset(username=request.user.get_username(), server_name=server_name)
-        return redirect("/edit") if response == 200 else redirect("/page-500.html")
+        return redirect("/") if response == 200 else redirect("/page-500.html")
 
     return redirect("/")
 
@@ -150,9 +150,8 @@ def exec(request):
     if request.method == "POST":
         data = dict(request.POST)
         server_name=data['server_name'][0]
-        mc_username = data['username'][0]
-        command = f'op {mc_username}'
-        response_code, response = api_functions.exec(username=request.user.get_username(), server_name=server_name, command=command)
+        mc_user = data['username'][0]
+        response_code, response = api_functions.op(username=request.user.get_username(), server_name=server_name, mc_user=mc_user)
         return redirect("/") if response_code == 200 else redirect(f"/page-500.html?error={response}")
 
     return redirect("/")
