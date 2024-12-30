@@ -55,7 +55,7 @@
                     <td class="d-flex">
                       <form method="post" action="stop">  
                         {% csrf_token %} 
-                        <button type="submit" name="server_name" value="{{server.name}}" class="btn btn-fill btn-primary mr-2" onclick="notification.showNotification('top','center','Stopping...', 1)">Stop</button>
+                        <button type="submit" name="server_name" value="{{server.NAME}}" class="btn btn-fill btn-primary mr-2" onclick="notification.showNotification('top','center','Stopping...', 1)">Stop</button>
                       </form>
                       <div>
                         <button class="btn btn-fill btn-secondary mb-2" onclick="toggleVisibility('username_input')"> /op </button>
@@ -72,16 +72,16 @@
                       </div>
                     </td>
                     <td>
-                      {{server.name}}
+                      {{server.NAME}}
                     </td>
                     <td>
-                      {{server.status}}
+                      {{server.STATUS}}
                     </td>
                     <td>
-                      {{url}}:{{server.port}}
+                      {{url}}:{{server.PORT}}
                     </td>
                     <td>
-                      {{server.version}}
+                      {{server.VERSION}}
                     </td>
                   </tr>
                   {% endfor %}
@@ -130,20 +130,20 @@
                     <td>
                       <form method="post" action="start">   
                         {% csrf_token %}  
-                        <button type="submit" name="server_name" value="{{server.name}}" class="btn btn-fill btn-primary" onclick="notification.showNotification('top','center','Starting...', 1)">Start</button>
+                        <button type="submit" name="server_name" value="{{server.NAME}}" class="btn btn-fill btn-primary" onclick="notification.showNotification('top','center','Starting...', 1)">Start</button>
                       </form>
                     </td>
                     <td>
-                      {{server.name}}
+                      {{server.NAME}}
                     </td>
                     <td>
-                      {{server.status}}
+                      {{server.STATUS}}
                     </td>
                     <td>
-                      {{url}}:{{server.port}}
+                      {{url}}:{{server.PORT}}
                     </td>
                     <td>
-                      {{server.version}}
+                      {{server.VERSION}}
                     </td>
                   </tr>
                   {% endfor %}
