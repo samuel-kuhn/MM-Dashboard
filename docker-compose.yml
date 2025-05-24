@@ -3,7 +3,7 @@ services:
     container_name: MM-Dashboard
     image: stubble1749/minecraft-manager
     ports:
-      - 8000:8000
+      - "8000:8000"
     environment:
       - DISPLAY_SERVER_IP=some-ip # ip used in the dashboard to show users how to connect to their server
       - DJANGO_SUPERUSER_USERNAME=admin 

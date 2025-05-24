@@ -8,8 +8,6 @@ from apps.home import views
 
 urlpatterns = [
 
-    # The home page
-    #path('', views.index, name='home'),
     path('', views.servers, name='servers'),
     path('create', views.create, name='create'),
     path('start', views.start, name='start'),
