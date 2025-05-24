@@ -1,25 +1,18 @@
 function validateName(){
     let name = document.getElementById('name').value;
     const pattern = /^[a-zA-Z0-9_.-]+$/;
-    if (!name || name === "" || name == null) {
-        showError('No name specified!', 'name');
-    } else if (!pattern.test(name)) {
-            showError('Invalid Name!', 'name');
+
+    if (!pattern.test(name)) {
+        showError('name');
     } else {
         resetError('name')
     }
 }
 
 
-function showError(errorMessage, inputField){
+function showError(inputField){
     let field = document.getElementById(inputField);
     field.classList.add('error');
-    if (inputField == 'guessedCategory') {
-        inputField.selectedIndex = 0;
-    } else {
-        field.value = null;
-        field.placeholder = errorMessage;
-    }
 }
 
 function resetError(id) {
