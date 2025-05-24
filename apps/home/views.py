@@ -15,15 +15,6 @@ import apps.home.api_functions as api_functions
 import apps.home.utilites as utilites
 
 
-
-@login_required(login_url="/login/")
-def index(request):
-    context = {'segment': 'index'}
-
-    html_template = loader.get_template('home/index.html')
-    return HttpResponse(html_template.render(context, request))
-
-
 @login_required(login_url="/login/")
 def pages(request):
     context = {}
@@ -108,7 +99,7 @@ def edit(request):
         html_template = loader.get_template('home/offline.html')
         return HttpResponse(html_template.render(request=request))
     server_name = request.GET.get('server')
-    if server_name == None: 
+    if server_name is None:
         servers = api_functions.get_servers(request.user.get_username())
         context = {'segment': 'edit', 'overview': True, 'servers': servers}    
     else:   
