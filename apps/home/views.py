@@ -6,13 +6,15 @@ Copyright (c) 2019 - present AppSeed.us
 from django import template
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect
 from django.template import loader
 from django.urls import reverse
-from django.shortcuts import redirect
 
 import core.settings as settings
 import apps.home.api_functions as api_functions
-import apps.home.utilites as utilites
+import apps.home.utilities as utilities
+
+ERROR_PAGE = "/page-500.html"
 
 
 @login_required(login_url="/login/")
@@ -48,7 +50,7 @@ def servers(request):
         html_template = loader.get_template('home/offline.html')
         return HttpResponse(html_template.render(request=request))
     servers = api_functions.get_servers(request.user.get_username())
-    running, exited = utilites.split_server_list(servers=servers)
+    running, exited = utilities.split_server_list(servers=servers)
     context = {'segment': 'servers',
                'url': settings.DISPLAY_SERVER_IP,
                'status': server_status,
@@ -65,7 +67,7 @@ def start(request):
     server_name = request.POST['server_name']
     username = request.user.get_username()
     response = api_functions.start(username, server_name)
-    return redirect("/") if response == 200 else redirect("/page-500.html")
+    return redirect("/") if response == 200 else redirect(ERROR_PAGE)
 
 
 @login_required(login_url="/login/")
@@ -73,12 +75,12 @@ def stop(request):
     server_name = request.POST['server_name']
     username = request.user.get_username()
     response = api_functions.stop(username, server_name)
-    return redirect("/") if response == 200 else redirect("/page-500.html")
+    return redirect("/") if response == 200 else redirect(ERROR_PAGE)
 
 
 @login_required(login_url="/login/")
 def create(request):
-    user_profile = utilites.get_user_profile_details(request.user.get_username())
+    user_profile = utilities.get_user_profile_details(request.user.get_username())
     server_status = api_functions.ping()
     if not server_status:
         html_template = loader.get_template('home/offline.html')
@@ -88,7 +90,10 @@ def create(request):
 
     if request.method == "POST":
         data = request.POST.dict()
-        data.pop('csrfmiddlewaretoken')
+        try:
+            data.pop('csrfmiddlewaretoken')
+        except KeyError:
+            return redirect(ERROR_PAGE)
 
         response = api_functions.create(username=request.user.get_username(), data=data)
         return redirect("/") if response == 200 else redirect("/page-500.html")
@@ -99,7 +104,7 @@ def create(request):
 
 @login_required(login_url="/login/")
 def edit(request):
-    user_profile = utilites.get_user_profile_details(request.user.get_username())
+    user_profile = utilities.get_user_profile_details(request.user.get_username())
     server_status = api_functions.ping()
     if not server_status:
         html_template = loader.get_template('home/offline.html')
@@ -117,7 +122,7 @@ def edit(request):
         data.pop('csrfmiddlewaretoken')
         server_name = request.GET.get('server')
         response = api_functions.edit(username=request.user.get_username(), server_name=server_name, data=data)
-        return redirect("/edit") if response == 200 else redirect("/page-500.html")
+        return redirect("/edit") if response == 200 else redirect(ERROR_PAGE)
 
     html_template = loader.get_template('home/edit.html')
     return HttpResponse(html_template.render(context, request))
@@ -129,7 +134,7 @@ def delete(request):
         data = dict(request.POST)
         server_name = data['server_name'][0]
         response = api_functions.delete(username=request.user.get_username(), server_name=server_name)
-        return redirect("/edit") if response == 200 else redirect("/page-500.html")
+        return redirect("/edit") if response == 200 else redirect(ERROR_PAGE)
 
     return redirect("/")
 
@@ -140,7 +145,7 @@ def reset(request):
         data = dict(request.POST)
         server_name = data['server_name'][0]
         response = api_functions.reset(username=request.user.get_username(), server_name=server_name)
-        return redirect("/") if response == 200 else redirect("/page-500.html")
+        return redirect("/") if response == 200 else redirect(ERROR_PAGE)
 
     return redirect("/")
 
@@ -160,7 +165,7 @@ def exec(request):
 
 @login_required(login_url="/login/")
 def user(request):
-    profile = utilites.get_user_profile(username=request.user.get_username())
+    profile = utilities.get_user_profile(username=request.user.get_username())
     context = {'segment': 'user',
                'profile': profile}
 
