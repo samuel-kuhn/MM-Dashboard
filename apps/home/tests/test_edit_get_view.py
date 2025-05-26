@@ -2,10 +2,8 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from django.urls import reverse
 
-from core import settings
-
 from ..api_functions import create
-from ..utilites import get_user_profile_details
+from ..utilities import get_user_profile_details
 
 class MyTestCase(TestCase):
 
