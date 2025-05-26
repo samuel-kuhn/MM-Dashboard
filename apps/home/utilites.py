@@ -22,7 +22,7 @@ def get_user_profile(username):
 def calculate_used_memory(data):  #calculates memory from server data
     running_servers = data[0]
     total_memory = 0
-    if running_servers == []:
+    if not running_servers:
         return total_memory
     for item in running_servers:
         memory = item['MEMORY'].split('G')[0]  # Split the string at 'G' and keep the first part
