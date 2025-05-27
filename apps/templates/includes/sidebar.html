@@ -9,25 +9,25 @@
                     </a>
                 </li>
                 <li class="{% if 'create' in segment %} active {% endif %} ">
-                    <a href="/create">
+                    <a href="/create" id="create">
                         <i class="tim-icons icon-simple-add"></i>
                         <p>New Server</p>
                     </a>
                 </li>
                 <li class="{% if 'edit' in segment %} active {% endif %} ">
-                    <a href="/edit">
+                    <a href="/edit" id="edit">
                         <i class="tim-icons icon-pencil"></i>
                         <p>Edit Server</p>
                     </a>
                 </li>
                 <li class="{% if 'user' in segment %} active {% endif %}">
-                    <a href="/user">
+                    <a href="/user" id="user">
                         <i class="tim-icons icon-single-02"></i>
                         <p>User Profile</p>
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'login' %}">
+                    <a href="{% url 'login' %}" id="logout">
                         <i class="tim-icons icon-button-power"></i>
                         <p>Logout</p>
                     </a>
