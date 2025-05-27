@@ -3,7 +3,7 @@
 Copyright (c) 2019 - present AppSeed.us
 """
 
-from django.urls import path, re_path
+from django.urls import path
 from apps.home import views
 
 urlpatterns = [
@@ -17,8 +17,5 @@ urlpatterns = [
     path('delete', views.delete, name='delete'),
     path('exec', views.exec, name='exec'),
     path('user', views.user, name='user'),
-
-    # Matches any html file
-    re_path(r'^.*\.*', views.pages, name='pages'),
 
 ]
