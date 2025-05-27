@@ -37,18 +37,24 @@ def servers(request):
 
 @login_required(login_url="/login/")
 def start(request):
-    server_name = request.POST['server_name']
-    username = request.user.get_username()
-    response = api_functions.start(username, server_name)
-    return redirect(HOME_PAGE) if response == 200 else redirect(ERROR_PAGE)
+    if request.method == "POST":
+        server_name = request.POST['server_name']
+        username = request.user.get_username()
+        response = api_functions.start(username, server_name)
+        return redirect(HOME_PAGE) if response == 200 else redirect(ERROR_PAGE)
+    else:
+        return redirect(HOME_PAGE)
 
 
 @login_required(login_url="/login/")
 def stop(request):
-    server_name = request.POST['server_name']
-    username = request.user.get_username()
-    response = api_functions.stop(username, server_name)
-    return redirect(HOME_PAGE) if response == 200 else redirect(ERROR_PAGE)
+    if request.method == "POST":
+        server_name = request.POST['server_name']
+        username = request.user.get_username()
+        response = api_functions.stop(username, server_name)
+        return redirect(HOME_PAGE) if response == 200 else redirect(ERROR_PAGE)
+    else:
+        return redirect(HOME_PAGE)
 
 
 @login_required(login_url="/login/")
@@ -119,7 +125,6 @@ def reset(request):
         server_name = data['server_name'][0]
         response = api_functions.reset(username=request.user.get_username(), server_name=server_name)
         return redirect(HOME_PAGE) if response == 200 else redirect(ERROR_PAGE)
-
     return redirect(HOME_PAGE)
 
 
@@ -132,7 +137,6 @@ def exec(request):
         response_code, response = api_functions.op(username=request.user.get_username(), server_name=server_name,
                                                    mc_user=mc_user)
         return redirect(HOME_PAGE) if response_code == 200 else redirect(f"{ERROR_PAGE}?error={response}")
-
     return redirect(HOME_PAGE)
 
 
