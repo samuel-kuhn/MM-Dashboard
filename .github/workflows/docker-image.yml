@@ -17,6 +17,26 @@ on:
     branches: [ "main" ]
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Test with Python
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Installing requirements
+        run: pip install -r requirements.txt
+
+      - name: Running all tests
+        run: python3 manage.py test
+
+
   build-and-publish:
     runs-on: ubuntu-latest
     steps:
