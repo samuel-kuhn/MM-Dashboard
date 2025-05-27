@@ -15,9 +15,11 @@ data = {
     "MOTD": "just a testserver"
 }
 
+
 def delete_all_servers(user):
     for server in get_servers(user):
         delete(user, server["NAME"])
+
 
 class CreatePostTestCase(TestCase):
 

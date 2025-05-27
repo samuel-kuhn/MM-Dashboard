@@ -3,18 +3,17 @@
 Copyright (c) 2019 - present AppSeed.us
 """
 
-from django import template
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.template import loader
-from django.urls import reverse
 
 import core.settings as settings
 import apps.home.api_functions as api_functions
 import apps.home.utilities as utilities
 
 from .pages import *
+
 
 @login_required(login_url="/login/")
 def servers(request):
