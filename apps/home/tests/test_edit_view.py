@@ -5,7 +5,7 @@ from django.urls import reverse
 from ..api_functions import create
 from ..utilities import get_user_profile_details
 
-class MyTestCase(TestCase):
+class EditViewTestCase(TestCase):
 
     def setUp(self):
         self.client = Client()

@@ -19,7 +19,7 @@ def delete_all_servers(user):
     for server in get_servers(user):
         delete(user, server["NAME"])
 
-class MyTestCase(TestCase):
+class CreatePostTestCase(TestCase):
 
     def setUp(self):
         self.client = Client()

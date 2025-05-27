@@ -5,7 +5,7 @@ from django.urls import reverse
 from core import settings
 
 
-class MyTestCase(TestCase):
+class ServerViewTestCase(TestCase):
 
     def setUp(self):
         self.client = Client()
