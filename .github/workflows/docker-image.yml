@@ -33,6 +33,9 @@ jobs:
       - name: Installing requirements
         run: pip install -r requirements.txt
 
+      - name: Setup tests
+        run: bash setup.sh
+
       - name: Running all tests
         run: python3 manage.py test
 
