@@ -14,8 +14,7 @@ import core.settings as settings
 import apps.home.api_functions as api_functions
 import apps.home.utilities as utilities
 
-ERROR_PAGE = "/page-500.html"
-
+from pages import *
 
 @login_required(login_url="/login/")
 def pages(request):
@@ -39,7 +38,7 @@ def pages(request):
         return HttpResponse(html_template.render(context, request))
 
     except:
-        html_template = loader.get_template('home/page-500.html')
+        html_template = loader.get_template(ERROR_PAGE)
         return HttpResponse(html_template.render(context, request))
 
 
@@ -67,7 +66,7 @@ def start(request):
     server_name = request.POST['server_name']
     username = request.user.get_username()
     response = api_functions.start(username, server_name)
-    return redirect("/") if response == 200 else redirect(ERROR_PAGE)
+    return redirect(HOME_PAGE) if response == 200 else redirect(ERROR_PAGE)
 
 
 @login_required(login_url="/login/")
@@ -75,7 +74,7 @@ def stop(request):
     server_name = request.POST['server_name']
     username = request.user.get_username()
     response = api_functions.stop(username, server_name)
-    return redirect("/") if response == 200 else redirect(ERROR_PAGE)
+    return redirect(HOME_PAGE) if response == 200 else redirect(ERROR_PAGE)
 
 
 @login_required(login_url="/login/")
@@ -96,7 +95,7 @@ def create(request):
             return redirect(ERROR_PAGE)
 
         response = api_functions.create(username=request.user.get_username(), data=data)
-        return redirect("/") if response == 200 else redirect("/page-500.html")
+        return redirect(HOME_PAGE) if response == 200 else redirect(ERROR_PAGE)
 
     html_template = loader.get_template('home/create.html')
     return HttpResponse(html_template.render(context, request))
@@ -122,7 +121,7 @@ def edit(request):
         data.pop('csrfmiddlewaretoken')
         server_name = request.GET.get('server')
         response = api_functions.edit(username=request.user.get_username(), server_name=server_name, data=data)
-        return redirect("/edit") if response == 200 else redirect(ERROR_PAGE)
+        return redirect(EDIT_PAGE) if response == 200 else redirect(ERROR_PAGE)
 
     html_template = loader.get_template('home/edit.html')
     return HttpResponse(html_template.render(context, request))
@@ -134,9 +133,9 @@ def delete(request):
         data = dict(request.POST)
         server_name = data['server_name'][0]
         response = api_functions.delete(username=request.user.get_username(), server_name=server_name)
-        return redirect("/edit") if response == 200 else redirect(ERROR_PAGE)
+        return redirect(EDIT_PAGE) if response == 200 else redirect(ERROR_PAGE)
 
-    return redirect("/")
+    return redirect(HOME_PAGE)
 
 
 @login_required(login_url="/login/")
@@ -145,9 +144,9 @@ def reset(request):
         data = dict(request.POST)
         server_name = data['server_name'][0]
         response = api_functions.reset(username=request.user.get_username(), server_name=server_name)
-        return redirect("/") if response == 200 else redirect(ERROR_PAGE)
+        return redirect(HOME_PAGE) if response == 200 else redirect(ERROR_PAGE)
 
-    return redirect("/")
+    return redirect(HOME_PAGE)
 
 
 @login_required(login_url="/login/")
@@ -158,9 +157,9 @@ def exec(request):
         mc_user = data['username'][0]
         response_code, response = api_functions.op(username=request.user.get_username(), server_name=server_name,
                                                    mc_user=mc_user)
-        return redirect("/") if response_code == 200 else redirect(f"/page-500.html?error={response}")
+        return redirect(HOME_PAGE) if response_code == 200 else redirect(f"{ERROR_PAGE}?error={response}")
 
-    return redirect("/")
+    return redirect(HOME_PAGE)
 
 
 @login_required(login_url="/login/")

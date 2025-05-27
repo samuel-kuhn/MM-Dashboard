@@ -3,6 +3,7 @@ from django.test import TestCase, Client
 from django.urls import reverse
 
 from ..api_functions import get_servers, delete
+from ..pages import *
 
 data = {
     "csrfmiddlewaretoken": "some token",
@@ -36,7 +37,7 @@ class MyTestCase(TestCase):
 
         # ASSERT
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, "/page-500.html")
+        self.assertEqual(response.url, ERROR_PAGE)
 
     def test_view_create_server_already_existing(self):
         # ARRANGE
@@ -48,7 +49,7 @@ class MyTestCase(TestCase):
 
         # ASSERT
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, "/page-500.html")
+        self.assertEqual(response.url, ERROR_PAGE)
 
     def test_view_create_server_bad_data(self):
         # ARRANGE
@@ -62,7 +63,7 @@ class MyTestCase(TestCase):
 
         # ASSERT
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, "/page-500.html")
+        self.assertEqual(response.url, ERROR_PAGE)
 
     def test_view_create_server_successful(self):
         # ARRANGE
