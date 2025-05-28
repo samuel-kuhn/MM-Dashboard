@@ -55,7 +55,8 @@
                     <td class="d-flex">
                       <form method="post" action="stop">  
                         {% csrf_token %} 
-                        <button type="submit" name="server_name" value="{{server.NAME}}" class="btn btn-fill btn-primary mr-2" onclick="notification.showNotification('top','center','Stopping...', 1)">Stop</button>
+                        <input type="hidden" name="server_name" value="{{server.NAME}}">
+                        <button type="submit" name="stop_button" class="btn btn-fill btn-primary mr-2" onclick="notification.showNotification('top','center','Stopping...', 1)">Stop</button>
                       </form>
                       <div>
                         <button class="btn btn-fill btn-secondary mb-2" onclick="toggleVisibility('username_input')"> /op </button>
@@ -95,6 +96,11 @@
           <div class="card-header">
             <h2 class="card-title">Available servers</h2>
           </div>
+          {% if not exited %}
+          <div class="card-body">
+            <h3>No available servers</h3>
+          </div>
+          {%else%}
           <div class="card-body">
             <div class="table-responsive">
               <table class="table tablesorter " id="">
@@ -129,8 +135,9 @@
                   <tr id="available_server">
                     <td>
                       <form method="post" action="start">   
-                        {% csrf_token %}  
-                        <button type="submit" name="server_name" value="{{server.NAME}}" class="btn btn-fill btn-primary" onclick="notification.showNotification('top','center','Starting...', 1)">Start</button>
+                        {% csrf_token %}
+                        <input type="hidden" name="server_name" value="{{server.NAME}}">
+                        <button type="submit" name="start_button" class="btn btn-fill btn-primary" onclick="notification.showNotification('top','center','Starting...', 1)">Start</button>
                       </form>
                     </td>
                     <td>
@@ -151,6 +158,7 @@
               </table>
             </div>
         </div>
+        {%endif%}
         {% else %}
         <div class="card ">
           <div class="card-header">
@@ -162,7 +170,7 @@
       </div>
     </div>
   </div>
-
+</div>
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
