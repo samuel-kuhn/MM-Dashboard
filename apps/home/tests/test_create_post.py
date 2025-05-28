@@ -1,3 +1,5 @@
+import time
+
 from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from django.urls import reverse
@@ -57,11 +59,11 @@ class CreatePostTestCase(TestCase):
         # ARRANGE
         delete_all_servers(self.user.username)
 
-        bad_data = data
+        bad_data = data.copy()
         bad_data["server_name"] = " "
 
         # ACT
-        response = self.client.post(self.url, data=data)
+        response = self.client.post(self.url, data=bad_data)
 
         # ASSERT
         self.assertEqual(response.status_code, 302)
