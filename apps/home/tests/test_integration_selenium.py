@@ -48,7 +48,7 @@ class TestStartServerIntegration(LiveServerTestCase):
         time.sleep(1)
 
         available_servers = self.driver.find_elements(By.ID, "available_server_list")
-        self.assertEqual(len(available_servers), 1)
+        self.assertEqual(len(available_servers), 0)
 
     def test_create_server(self):
         self.test_login()
@@ -83,5 +83,20 @@ class TestStartServerIntegration(LiveServerTestCase):
         self.assertTrue(f"{settings.DISPLAY_SERVER_IP}:25565" in created_server.text)
         self.assertTrue("1.16.5" in created_server.text)
 
+    def test_start_server(self):
+        self.test_create_server()
+
+        available_servers = self.driver.find_elements(By.ID, "available_server_list")
+        self.assertEqual(len(available_servers), 1)
+        created_server = available_servers[0]
+        created_server.find_element(By.NAME, "start_button").click()
+
+        time.sleep(3)
+
+        running_servers = self.driver.find_elements(By.ID, "running_server_list")
+        self.assertEqual(len(running_servers), 1)
+
+        available_servers = self.driver.find_elements(By.ID, "available_server_list")
+        self.assertEqual(len(available_servers), 0)
 
 
